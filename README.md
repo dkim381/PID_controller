@@ -10,16 +10,16 @@ followed by focused experiments on disturbance rejection under actuator saturati
 ## System Model
 The plant is modeled as a first-order system with an additive disturbance:
 
-\[
+\
 \dot{x} = -x + (u + d), \quad y = x
-\]
+\
 
 The system is implemented in discrete time using forward Euler integration.
 
 - Actuator saturation:
-\[
+
 u \in [u_{\min}, u_{\max}]
-\]
+
 - Disturbance: pulse disturbance applied between **t = 5 s** and **t = 10 s**
 
 ---
