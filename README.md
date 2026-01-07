@@ -14,6 +14,7 @@ dx/dt = -x + (u + d)
 y = x
 
 where u is the control input and d is an external disturbance.
+
 The system is implemented in discrete time using forward Euler integration.
 
 - Actuator saturation:  
