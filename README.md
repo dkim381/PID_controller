@@ -10,80 +10,53 @@ followed by focused experiments on disturbance rejection under actuator saturati
 ## System Model
 The plant is modeled as a first-order system with an additive disturbance:
 
-\
-\dot{x} = -x + (u + d), \quad y = x
-\
+dx/dt = -x + (u + d)  
+y = x
 
 The system is implemented in discrete time using forward Euler integration.
 
-- Actuator saturation:
-
-u \in [u_{\min}, u_{\max}]
-
-- Disturbance: pulse disturbance applied between **t = 5 s** and **t = 10 s**
+- Actuator saturation:  
+  u ∈ [u_min, u_max]
+- Disturbance: pulse disturbance applied between t = 5 s and t = 10 s
 
 ---
+## Experiments and Results
 
-## Controller Design
-A PID controller with back-calculation anti-windup is implemented:
+### Reference and Saturation Effects
+Initial experiments explored different reference values and anti-windup gains
+to understand tracking behavior under actuator saturation.
 
-\[
-u_{unsat} = K_p e + K_i I + K_d \dot{e}
-\]
+### Disturbance Rejection with Anti-Windup
+- Reference: r = 3
+- Disturbance applied between 5 s and 10 s
 
-\[
-u = \mathrm{sat}(u_{unsat})
-\]
+Two cases were considered:
+1. Infeasible reference under saturation (u_max = 2)
+2. Saturation released after disturbance (u_max = 3)
 
-\[
-\dot{I} = e + K_{aw}(u - u_{unsat})
-\]
-
-where \(e = r - y\) is the tracking error and \(K_{aw}\) is the anti-windup gain.
-
----
-
-## Initial Exploration: Reference and Anti-Windup Gain
-As an initial step, the controller behavior was explored for different reference values and anti-windup gains.
-These experiments were used to study tracking performance under feasible and infeasible reference conditions,
-understand actuator saturation effects, and gain intuition on integrator windup behavior.
-
-The results of this exploration informed the design of the main disturbance rejection experiments.
-
----
-
-## Main Experiments: Saturation and Disturbance Rejection
-
-### Baseline Case (Infeasible Reference)
-- Reference: \( r = 3 \)
-- Actuator limit: \( u_{\max} = 2 \)
-
-In this case, output responses are nearly identical for different values of \(K_{aw}\) due to actuator saturation.
-However, without anti-windup, the integrator state and unsaturated control input grow excessively.
-This shows that anti-windup primarily improves internal controller stability and safety when output performance is constrained.
-
----
-
-### Extension Case (Saturation Released)
-- Actuator limit increased to \( u_{\max} = 3 \)
-
-When saturation is released after disturbance removal, output recovery behavior differs depending on \(K_{aw}\).
-A controller without anti-windup recovers faster due to accumulated integrator action but exhibits aggressive control effort,
-while larger anti-windup gains produce slower but more stable and predictable recovery.
-This highlights the trade-off between recovery speed and robustness.
+When saturation is active, output responses are similar for different anti-windup gains,
+but internal controller states differ significantly.
+When saturation is released, anti-windup affects recovery speed and control effort.
 
 ---
 
 ## Quantitative Analysis
-Recovery time after disturbance removal (t = 10 s) is defined as the time required for the output
-to return within **±2% of the steady-state value**.
+A quantitative analysis confirmed that anti-windup limits integrator growth
+and results in more stable recovery behavior after disturbance removal,
+although faster recovery is not always guaranteed.
 
-| Kaw | Recovery Time (s) | max |I| | max |u_unsat| |
-|-----|------------------|------|--------------|
-| 0   | 2.81             | 8.00 | 72.0 |
-| 1   | 3.64             | 1.00 | 72.0 |
-| 5   | 3.84             | 2.21 | 72.0 |
+---
+## Conclusion
+Anti-windup does not always improve output recovery speed.
+However, it is essential for preventing integrator windup, bounding internal control signals,
+and ensuring safe and predictable controller behavior under actuator saturation.
+
+By progressing from basic parameter exploration to focused disturbance rejection experiments,
+this project demonstrates both the benefits and trade-offs of anti-windup in practical control systems.
 
 ---
 
 ## Project Structure
+src/ C++ simualtion code
+analysis/ Python for plotting and analysis
+data/ Logged simulation data
