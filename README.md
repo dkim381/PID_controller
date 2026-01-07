@@ -12,7 +12,7 @@ The plant is modeled as a first-order system with an additive disturbance:
 
 dx/dt = -x + (u + d)  
 y = x
-/n u = control input  d = external disturbance
+\n u = control input  d = external disturbance
 
 The system is implemented in discrete time using forward Euler integration.
 
