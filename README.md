@@ -12,7 +12,8 @@ The plant is modeled as a first-order system with an additive disturbance:
 
 dx/dt = -x + (u + d)  
 y = x
-\where u is the control input and d is an external disturbance.
+
+where u is the control input and d is an external disturbance.
 The system is implemented in discrete time using forward Euler integration.
 
 - Actuator saturation:  
