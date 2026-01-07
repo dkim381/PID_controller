@@ -57,6 +57,6 @@ this project demonstrates both the benefits and trade-offs of anti-windup in pra
 ---
 
 ## Project Structure
-src/ C++ simualtion code
-analysis/ Python for plotting and analysis
-data/ Logged simulation data
+- src/ C++ simualtion code
+- analysis/ Python for plotting and analysis
+- data/ Logged simulation data
